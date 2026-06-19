@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Orchid\Screens\PlatformScreen;
+use App\Orchid\Screens\PostListScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
 use App\Orchid\Screens\User\UserEditScreen;
@@ -25,6 +26,10 @@ use Tabuna\Breadcrumbs\Trail;
 // Main
 Route::screen('/main', PlatformScreen::class)
     ->name('platform.main');
+
+// Platform > Posts
+Route::screen('posts', PostListScreen::class)
+    ->name('platform.posts');
 
 // Platform > Profile
 Route::screen('profile', UserProfileScreen::class)
@@ -75,4 +80,5 @@ Route::screen('roles', RoleListScreen::class)
         ->parent('platform.index')
         ->push(__('Roles'), route('platform.systems.roles')));
 
-// Route::screen('idea', Idea::class, 'platform.screens.idea');
+
+

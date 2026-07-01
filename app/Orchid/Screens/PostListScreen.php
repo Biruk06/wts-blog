@@ -4,6 +4,8 @@ namespace App\Orchid\Screens;
 
 use Orchid\Screen\Screen;
 use App\Orchid\Layouts\PostListLayout;
+use App\Models\Post;
+
 
 class PostListScreen extends Screen
 {
@@ -14,7 +16,9 @@ class PostListScreen extends Screen
     public function query(): iterable
     {
         return [
-            'posts' => [],
+            'posts' => Post::with('user')
+                ->latest()
+                ->paginate(10),
         ];
     }
 

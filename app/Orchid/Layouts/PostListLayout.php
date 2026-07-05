@@ -3,6 +3,7 @@
 namespace App\Orchid\Layouts;
 
 use Orchid\Screen\Layouts\Table;
+use Orchid\Screen\Actions\Link;
 use Orchid\Screen\TD;
 use App\Models\Post;
 
@@ -24,7 +25,9 @@ class PostListLayout extends Table
             TD::make('id', 'ID')
                 ->width('100px'),
 
-            TD::make('title', 'Заголовок'),
+            TD::make('title', 'Заголовок')
+                ->render(fn (Post $post) => Link::make($post->title)
+                    ->route('platform.posts.edit', $post)),
 
             TD::make('user.name', 'Автор'),
 

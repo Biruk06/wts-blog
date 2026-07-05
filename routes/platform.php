@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Orchid\Screens\PlatformScreen;
 use App\Orchid\Screens\PostListScreen;
+use App\Orchid\Screens\PostEditScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
 use App\Orchid\Screens\User\UserEditScreen;
@@ -30,6 +31,12 @@ Route::screen('/main', PlatformScreen::class)
 // Platform > Posts
 Route::screen('posts', PostListScreen::class)
     ->name('platform.posts');
+
+Route::screen('posts/create', PostEditScreen::class)
+    ->name('platform.posts.create');
+
+Route::screen('posts/{post}/edit', PostEditScreen::class)
+    ->name('platform.posts.edit');
 
 // Platform > Profile
 Route::screen('profile', UserProfileScreen::class)

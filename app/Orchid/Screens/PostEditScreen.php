@@ -56,7 +56,13 @@ class PostEditScreen extends Screen
         return [
             Button::make('Сохранить')
                 ->icon('bs.check-circle')
-                ->method('createOrUpdate')
+                ->method('createOrUpdate'),
+            
+            Button::make('Удалить пост')
+                ->icon('bs.trash')
+                ->confirm('Вы уверены, что хотите удалить эту публикацию?')
+                ->method('remove')
+                ->canSee($this->post && $this->post->exists),
         ];
     }
 
@@ -100,6 +106,15 @@ class PostEditScreen extends Screen
         $post->fill($request->get('post'))->save();
 
         alert()->info('Публикация успешно сохранена.');
+
+        return redirect()->route('platform.posts');
+    }
+
+    public function remove(Post $post)
+    {
+        $post->delete();
+
+        alert()->warning('Публикация успешно удалена.');
 
         return redirect()->route('platform.posts');
     }

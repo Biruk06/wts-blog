@@ -2,10 +2,10 @@
 
 namespace App\Orchid\Screens;
 
+use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
 use App\Orchid\Layouts\PostListLayout;
 use App\Models\Post;
-
 
 
 class PostListScreen extends Screen
@@ -40,7 +40,11 @@ class PostListScreen extends Screen
      */
     public function commandBar(): iterable
     {
-        return [];
+        return [
+            Link::make('Создать публикацию')
+                ->icon('bs.plus-circle')
+                ->route('platform.posts.create'),
+        ];
     }
 
     /**

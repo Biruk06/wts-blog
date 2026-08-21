@@ -11,6 +11,10 @@ use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\TextArea;
 use Orchid\Screen\Fields\Select;
 
+use Orchid\Screen\Actions\Button;
+use Orchid\Screen\facades\alert;
+
+use Illuminate\Http\Request;
 
 class PostEditScreen extends Screen
 {
@@ -49,7 +53,11 @@ class PostEditScreen extends Screen
      */
     public function commandBar(): iterable
     {
-        return [];
+        return [
+            Button::make('Сохранить')
+                ->icon('bs.check-circle')
+                ->method('createOrUpdate')
+        ];
     }
 
     /**
@@ -78,5 +86,21 @@ class PostEditScreen extends Screen
                     ->required(),
             ]),
         ];
+    }
+
+
+    public function createOrUpdate(Post $post, Request $request)
+    {
+        $request->validate([
+            'post.title' => 'required|string|min:5|max:255',
+            'post.text' => 'required|string|min:10',
+            'post.user_id' => 'required|exists:users,id',
+        ]);
+    
+        $post->fill($request->get('post'))->save();
+
+        alert()->info('Публикация успешно сохранена.');
+
+        return redirect()->route('platform.posts');
     }
 }

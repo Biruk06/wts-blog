@@ -23,15 +23,19 @@ class PostListLayout extends Table
     {
         return [
             TD::make('id', 'ID')
+                ->sort()
                 ->width('100px'),
 
             TD::make('title', 'Заголовок')
+                ->sort()
                 ->render(fn (Post $post) => Link::make($post->title)
                     ->route('platform.posts.edit', $post)),
 
-            TD::make('user.name', 'Автор'),
+            TD::make('user.name', 'Автор')
+                ->sort(),
 
             TD::make('created_at', 'Создано')
+                ->sort()
                 ->render(fn (Post $post) => $post->created_at->format('d.m.Y H:i')),
         ];
     }

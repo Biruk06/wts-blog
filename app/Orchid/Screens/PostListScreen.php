@@ -18,7 +18,8 @@ class PostListScreen extends Screen
     {
         return [
             'posts' => Post::with('user')
-                ->latest()
+                ->filters()
+                ->defaultSort('created_at', 'desc')
                 ->paginate(10),
         ];
     }

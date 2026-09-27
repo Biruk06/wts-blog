@@ -97,4 +97,32 @@ class PostController extends Controller
             'message' => 'Пост успешно удален'
         ], 200);
     }
+
+    public function userPosts(Request $request)
+    {
+        $query = $request->user()->posts();
+
+        if ($request->has('date_from')) {
+            $query->whereDate('created_at', '>=', $request->query('date_from'));
+        }
+
+        if ($request->has('date_to')) {
+            $query->whereDate('created_at', '<=', $request->query('date_to'));
+        }
+
+        // Сортировка по дате или заголовку
+        $sortBy    = $request->query('sort_by');
+        $sortOrder = $request->query('sort_order', 'desc');
+        $sortField = ($sortBy === 'title') ? 'title' : 'created_at';
+
+        $query->orderBy($sortField, $sortOrder);
+
+        // Пагинация
+        $limit  = $request->query('limit', 10);
+        $offset = $request->query('offset', 0);
+
+        $posts = $query->limit($limit)->offset($offset)->get();
+
+        return response()->json($posts, 200);
+    }    
 }

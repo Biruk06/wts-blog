@@ -20,4 +20,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/posts', [PostController::class, 'store']);
     Route::delete('/posts/{id}', [PostController::class, 'destroy']);
+
+    Route::get('/my-posts', [PostController::class, 'userPosts']);
 });

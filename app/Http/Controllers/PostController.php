@@ -6,6 +6,8 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Requests\IndexPostRequest;
 use App\Http\Requests\StorePostRequest;
+use App\Services\PostService;
+use Illuminate\Http\JsonResponse;
 
 class PostController extends Controller
 {
@@ -15,7 +17,7 @@ class PostController extends Controller
     
     public function index(IndexPostRequest $request):JsonResponse
     {
-        $posts = $this-&gt;postService-&gt;getFilteredPosts($request-&gt;validated());
+        $posts = $this->postService->getFilteredPosts($request->validated());
         return response()->json($posts);
     }
 
@@ -26,7 +28,7 @@ class PostController extends Controller
     }
 
 
-    public function show(string $id):JsonResponse
+    public function show(Post $post):JsonResponse
     {
         $post = $this->postService->getPost($post);
         return response()->json($post);

@@ -19,7 +19,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::post('/posts', [PostController::class, 'store']);
-    Route::delete('/posts/{id}', [PostController::class, 'destroy']);
+    Route::delete('/posts/{post}', [PostController::class, 'destroy']);
 
     Route::get('/my-posts', [PostController::class, 'userPosts']);
 });
